@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_40"/>
+	<classpathentry kind="lib" path="C:/Users/JaroLP/jars/BoofCV.jar"/>
+	<classpathentry kind="lib" path="C:/Users/JaroLP/jars/com.thoughtworks.xstream_1.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/JaroLP/jars/DDogleg.jar"/>
+	<classpathentry kind="lib" path="C:/Users/JaroLP/jars/ddogleg-0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/JaroLP/jars/ddogleg-0.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/JaroLP/jars/GeoRegression.jar"/>
+	<classpathentry kind="lib" path="C:/Users/JaroLP/jars/georegression-0.2-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/JaroLP/jars/georegression-0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/JaroLP/jars/javax.persistence.jar"/>
+	<classpathentry kind="lib" path="C:/Users/JaroLP/jars/ejml.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
