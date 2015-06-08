@@ -144,6 +144,7 @@ public class ExampleAssociatePoints<T extends ImageSingleBand, TD extends TupleD
 			points.add(detDesc.getLocation(i).copy());
 			descs.grow().setTo(detDesc.getDescription(i));
 			if (pom == 1) {
+				writer.write(points.get(i).toString()+"\n");
 				for (int j = 0; j < 64; j++) {
 
 					writer.write(detDesc.getDescription(i).getDouble(j) + "\n");

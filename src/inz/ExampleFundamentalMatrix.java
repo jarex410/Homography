@@ -195,7 +195,7 @@ public class ExampleFundamentalMatrix {
 		String pom = "";
 		String nazwa = "";
 		String nazwa2 = "";
-		String dir2="D:/IN¯YNIERKA/testy/";
+		String dir2="D:/IN¯YNIERKA/Homography/";
 		BufferedImage imageA;
 		BufferedImage imageB;
 		String pom4="";

@@ -8,7 +8,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
 public class Knn {
 
 	public static void main(String[] args) throws IOException {
@@ -19,9 +18,11 @@ public class Knn {
 		// Scanner in2 = new Scanner(file2);
 		ArrayList<String> lista = new ArrayList<String>();
 		ArrayList<String> lista2 = new ArrayList<String>();
-		FileReader fr = new FileReader("D:/IN¯YNIERKA/Desc/Desc 00_00_00.jpg.txt");
+		FileReader fr = new FileReader(
+				"D:/IN¯YNIERKA/Desc/Desc 00_00_00.jpg.txt");
 		BufferedReader bfr = new BufferedReader(fr);
-		FileReader fr2 = new FileReader("D:/IN¯YNIERKA/Desc/Desc 00_00_01.jpg.txt");
+		FileReader fr2 = new FileReader(
+				"D:/IN¯YNIERKA/Desc/Desc 00_00_01.jpg.txt");
 		BufferedReader bfr2 = new BufferedReader(fr2);
 
 		int liczbaPkt1 = 0, liczbaPkt2 = 0, liczbaPkt = 0; // ZMIENNE DO
@@ -29,7 +30,7 @@ public class Knn {
 															// WARTOSCI
 															// ODNALEZIONYCH
 															// PKT;
-
+		int liczbaPar = 0;
 		String pom;
 
 		while ((pom = bfr.readLine()) != null) { // PIERWSZY PLIK WCZYTANIE DO
@@ -50,7 +51,7 @@ public class Knn {
 				lista2.add(pom);
 			}
 			liczbaPkt2++;
-		} 
+		}
 
 		if (liczbaPkt1 > liczbaPkt2) // OBLICZANIE MINIMALNEJ LICZBY PKT
 										// WLASCIWIIE NIEPOTRZEBNE
@@ -67,29 +68,30 @@ public class Knn {
 		int z = 0;
 
 		PrintWriter zapis = new PrintWriter("D:/IN¯YNIERKA/knn/knn.txt"); // PROWIZORYCZNY
-																	// ZAPIS
-																	// WYNIKOW
-																	// DO PLIKU
+		// ZAPIS
+		// WYNIKOW
+		// DO PLIKU
 		Iterator<String> it = lista.iterator(); // DESKRYPTORY PIERWSZEGO
 												// OBRAZKA
 		Iterator<String> it2 = lista2.iterator();// DESKRYPTORY 2 OBRAZKA
 		int skok = 0;
 		double[] tabSum = new double[liczbaPkt1 * liczbaPkt2]; // TABLICA
-																// PRZECHOWUJACA
-																// WYNIKI // DO
-																// KNN
+		String pomZapas = ""; // PRZECHOWUJACA
+		// WYNIKI // DO
+		// KNN
 		int licznikObrotu = 0; // ZMIENNE POMOCNA PRZY WYLICZENIU PRZESUNIECIA
 
 		while (it.hasNext() && it2.hasNext()) { // PETELKA PRZECHODZ¥CA PO
 												// KOLEKCJACH
 			// pom6 = it.next();
 
-			for (int kk = 0; kk < liczbaPkt2 && kk < liczbaPkt; kk++) // PETLA KTORA OBSLUGUJE
-													// SPRAWDZANIE PKTx1 z listy
-													// 1 z PKTx1....xn z listy 2
+			for (int kk = 0; kk < liczbaPkt2 && kk < liczbaPkt; kk++) // PETLA
+																		// KTORA
+																		// OBSLUGUJE
+			// SPRAWDZANIE PKTx1 z listy
+			// 1 z PKTx1....xn z listy 2
 
 			{
-
 				pom6 = it.next(); // WSPOLRZEDNE PKT
 				pom7 = it2.next();
 				// System.out.println(pom6 + " POOOOOM 66");
@@ -110,10 +112,13 @@ public class Knn {
 
 				}
 				suma = Math.sqrt(suma);
-				if (suma >= 0.8) {
+				if (suma >= 0.95) {
 					zapis.write(pom6 + pom7 + "\n"); // FORMAT
-														// ZAPISU DO
-														// PLIKU.
+					if (pom6 != pomZapas) {
+						liczbaPar++;
+						pomZapas = pom6;
+					}// ZAPISU DO
+						// PLIKU.
 					pom6 = "";
 				}
 				tabSum[z++] = suma; // WRZUCENIE SUMY DO TABLICY W CELACH
@@ -152,7 +157,7 @@ public class Knn {
 		{
 			System.out.println(tabSum[zz] + " Element =" + zz);
 		}
-
+		zapis.write("Liczba Par = " + liczbaPar);
 		zapis.close();
 
 		// in2.close();
@@ -161,7 +166,6 @@ public class Knn {
 
 		FileReader fr3 = new FileReader("G:/testy/Knn12.txt");
 		BufferedReader bfr3 = new BufferedReader(fr3);
-		int liczbaPar = 0;
 		String pom8 = "", pom9;
 		// Point pkt;
 		ArrayList<String> listaPkt = new ArrayList<String>();
@@ -183,7 +187,7 @@ public class Knn {
 				if (linia.charAt(i) == ' ') {
 					l2++;
 					if (l2 == 2) {
-						//System.out.println("POM 8 =" + pom8);
+						// System.out.println("POM 8 =" + pom8);
 						listaPkt.add(pom8);
 						pom8 = "";
 
@@ -222,10 +226,11 @@ public class Knn {
 		PrintWriter zapis2 = new PrintWriter("G:/testy/Knn1-2.txt");
 		for (Point pkt : points) // SPRAWDZANIE CZY DOBRZE WRZUCA
 		{
-		//	System.out.println("pkt x  : " + String.format("%.3f", pkt.getX())
-		//			+ " Y  " + String.format("%.3f", pkt.getY()));
-			zapis2.write(df.format(pkt.getX()) + " "
-					+ df.format(pkt.getY()) + "\n");  //zapis do formatu taki jak w przykladach
+			// System.out.println("pkt x  : " + String.format("%.3f",
+			// pkt.getX())
+			// + " Y  " + String.format("%.3f", pkt.getY()));
+			zapis2.write(df.format(pkt.getX()) + " " + df.format(pkt.getY())
+					+ "\n"); // zapis do formatu taki jak w przykladach
 		}
 		fr3.close();
 		zapis2.close();
