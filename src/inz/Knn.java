@@ -19,10 +19,10 @@ public class Knn {
 		ArrayList<String> lista = new ArrayList<String>();
 		ArrayList<String> lista2 = new ArrayList<String>();
 		FileReader fr = new FileReader(
-				"D:/IN¯YNIERKA/Desc/Desc 00_00_00.jpg.txt");
+				"D:/IN¯YNIERKA/Desc/Desc 24_00_00.jpg.txt");
 		BufferedReader bfr = new BufferedReader(fr);
 		FileReader fr2 = new FileReader(
-				"D:/IN¯YNIERKA/Desc/Desc 00_00_01.jpg.txt");
+				"D:/IN¯YNIERKA/Desc/Desc 24_00_00.jpg.txt");
 		BufferedReader bfr2 = new BufferedReader(fr2);
 
 		int liczbaPkt1 = 0, liczbaPkt2 = 0, liczbaPkt = 0; // ZMIENNE DO
@@ -64,10 +64,14 @@ public class Knn {
 		String pom5 = "";
 		String pom6 = "";
 		String pom7 = "";
+		String wsp1Max = "";
+		String wsp2Max = "";
 		double suma = 0;
+		double min1 = 100;
+		double min2 = 100;
 		int z = 0;
 
-		PrintWriter zapis = new PrintWriter("D:/IN¯YNIERKA/knn/knn.txt"); // PROWIZORYCZNY
+		PrintWriter zapis = new PrintWriter("D:/IN¯YNIERKA/knn/24.00.00.txt"); // PROWIZORYCZNY
 		// ZAPIS
 		// WYNIKOW
 		// DO PLIKU
@@ -112,16 +116,26 @@ public class Knn {
 
 				}
 				suma = Math.sqrt(suma);
-				if (suma >= 0.95) {
-					zapis.write(pom6 + pom7 + "\n"); // FORMAT
-					if (pom6 != pomZapas) {
-						liczbaPar++;
-						pomZapas = pom6;
-					}// ZAPISU DO
-						// PLIKU.
-					pom6 = "";
+
+				if (kk == 0) {
+					min1 = suma;
+					wsp1Max = pom6 + pom7 ;
+				} else if (kk == 1) {
+					min2 = suma;
+					wsp2Max = pom6 + pom7 ;
 				}
-				tabSum[z++] = suma; // WRZUCENIE SUMY DO TABLICY W CELACH
+				if (suma < 0.8 && suma < min1) {
+					min1 = suma;
+					wsp1Max = pom6 + pom7 ;
+				} else if (suma < 0.8 && suma < min2) {
+					min2 = suma;
+					wsp2Max = pom6 + pom7;
+				}
+				/*
+				 * if(kk<1 && suma < 0.8) { zapis.write(pom6 + pom7 + "\n"); //
+				 * FORMAT liczbaPar++; pom6 = ""; }
+				 */
+		//		tabSum[z++] = suma; // WRZUCENIE SUMY DO TABLICY W CELACH
 									// SPRAWDZENIOWYCH
 
 				// System.out.println("SUMA = " +suma);
@@ -134,6 +148,9 @@ public class Knn {
 					it.next();
 				}
 			}
+			zapis.write(wsp1Max + "\n" + wsp2Max + "\n"); // FORMAT
+			liczbaPar+=2;
+			pom6 = "";
 			// licznikObrotu++;
 			/*
 			 * if (licznikObrotu <= liczbaPkt1) licznikObrotu++; else
@@ -152,89 +169,63 @@ public class Knn {
 
 			// it=lista.iterator();
 		}
-
-		for (int zz = 0; zz < z; zz++) // PETELKA DO WYŒWIETLANIA SUM
-		{
-			System.out.println(tabSum[zz] + " Element =" + zz);
-		}
+		/*
+		 * for (int zz = 0; zz < z; zz++) // PETELKA DO WYŒWIETLANIA SUM {
+		 * System.out.println(tabSum[zz] + " Element =" + zz); }
+		 */
 		zapis.write("Liczba Par = " + liczbaPar);
 		zapis.close();
 
 		// in2.close();
 		fr.close();
 		fr2.close();
-
-		FileReader fr3 = new FileReader("G:/testy/Knn12.txt");
-		BufferedReader bfr3 = new BufferedReader(fr3);
-		String pom8 = "", pom9;
-		// Point pkt;
-		ArrayList<String> listaPkt = new ArrayList<String>();
-		String linia;
-		int l2 = 0;
-		DecimalFormat df = new DecimalFormat("#.###");
-
-		while ((linia = bfr3.readLine()) != null) // PKT PLIK WCZYTANIE DO
-		{
-
-			for (int i = 0; i < linia.length(); i++) {
-				if (Character.isDigit(linia.charAt(i))) {
-					pom8 += linia.charAt(i);
-					if (linia.charAt(i + 1) == '.')
-						pom8 += linia.charAt(i + 1);
-					// System.out.println("POM 88888888888 " + pom8);
-				}
-
-				if (linia.charAt(i) == ' ') {
-					l2++;
-					if (l2 == 2) {
-						// System.out.println("POM 8 =" + pom8);
-						listaPkt.add(pom8);
-						pom8 = "";
-
-					} else if (l2 == 3) {
-						// System.out.println( " POOOOOOOOOOOOOOOOOO   "+pom8);
-						listaPkt.add(pom8); // WRZUCANIE WSP PKT x oraz y
-											// pierwsze 2 linie to pkt1 2
-											// kolejne to jego sasiad.
-						pom8 = "";
-						l2 = 0;
-					}
-
-				}
-			}
-
-		}
-
 		/*
-		 * for(String pkt1 : listaPkt ) { System.out.println("pkt STR  : "
-		 * +pkt1); }
+		 * FileReader fr3 = new FileReader("G:/testy/Knn12.txt"); BufferedReader
+		 * bfr3 = new BufferedReader(fr3); String pom8 = "", pom9; // Point pkt;
+		 * ArrayList<String> listaPkt = new ArrayList<String>(); String linia;
+		 * int l2 = 0; DecimalFormat df = new DecimalFormat("#.###");
+		 * 
+		 * while ((linia = bfr3.readLine()) != null) // PKT PLIK WCZYTANIE DO {
+		 * 
+		 * for (int i = 0; i < linia.length(); i++) { if
+		 * (Character.isDigit(linia.charAt(i))) { pom8 += linia.charAt(i); if
+		 * (linia.charAt(i + 1) == '.') pom8 += linia.charAt(i + 1); //
+		 * System.out.println("POM 88888888888 " + pom8); }
+		 * 
+		 * if (linia.charAt(i) == ' ') { l2++; if (l2 == 2) { //
+		 * System.out.println("POM 8 =" + pom8); listaPkt.add(pom8); pom8 = "";
+		 * 
+		 * } else if (l2 == 3) { // System.out.println(
+		 * " POOOOOOOOOOOOOOOOOO   "+pom8); listaPkt.add(pom8); // WRZUCANIE WSP
+		 * PKT x oraz y // pierwsze 2 linie to pkt1 2 // kolejne to jego sasiad.
+		 * pom8 = ""; l2 = 0; }
+		 * 
+		 * } }
 		 */
 
-		Double a = 0.0;
-
-		ArrayList<Point> points = new ArrayList<Point>(); // LISTA NA PKT
-															// DOPASOWANE
-		Iterator<String> it3 = listaPkt.iterator();
-		while (it3.hasNext()) {
-			Point point = new Point();
-			point.setX(Double.parseDouble(it3.next())); // PARSOWANIE STRINGA NA
-														// DOULBE
-			point.setY(Double.parseDouble(it3.next()));
-			points.add(point);
-
-		}
-		PrintWriter zapis2 = new PrintWriter("G:/testy/Knn1-2.txt");
-		for (Point pkt : points) // SPRAWDZANIE CZY DOBRZE WRZUCA
-		{
-			// System.out.println("pkt x  : " + String.format("%.3f",
-			// pkt.getX())
-			// + " Y  " + String.format("%.3f", pkt.getY()));
-			zapis2.write(df.format(pkt.getX()) + " " + df.format(pkt.getY())
-					+ "\n"); // zapis do formatu taki jak w przykladach
-		}
-		fr3.close();
-		zapis2.close();
-
 	}
+
+	/*
+	 * for(String pkt1 : listaPkt ) { System.out.println("pkt STR  : " +pkt1); }
+	 */
+
+	/*
+	 * Double a = 0.0;
+	 * 
+	 * ArrayList<Point> points = new ArrayList<Point>(); // LISTA NA PKT //
+	 * DOPASOWANE Iterator<String> it3 = listaPkt.iterator(); while
+	 * (it3.hasNext()) { Point point = new Point();
+	 * point.setX(Double.parseDouble(it3.next())); // PARSOWANIE STRINGA NA //
+	 * DOULBE point.setY(Double.parseDouble(it3.next())); points.add(point);
+	 * 
+	 * } PrintWriter zapis2 = new PrintWriter("G:/testy/Knn1-2.txt"); for (Point
+	 * pkt : points) // SPRAWDZANIE CZY DOBRZE WRZUCA { //
+	 * System.out.println("pkt x  : " + String.format("%.3f", // pkt.getX()) //
+	 * + " Y  " + String.format("%.3f", pkt.getY()));
+	 * zapis2.write(df.format(pkt.getX()) + " " + df.format(pkt.getY()) + "\n");
+	 * // zapis do formatu taki jak w przykladach } fr3.close(); zapis2.close();
+	 * 
+	 * }
+	 */
 
 }
