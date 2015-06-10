@@ -135,7 +135,7 @@ public class Knn {
 				 * if(kk<1 && suma < 0.8) { zapis.write(pom6 + pom7 + "\n"); //
 				 * FORMAT liczbaPar++; pom6 = ""; }
 				 */
-		//		tabSum[z++] = suma; // WRZUCENIE SUMY DO TABLICY W CELACH
+				tabSum[z++] = suma; // WRZUCENIE SUMY DO TABLICY W CELACH
 									// SPRAWDZENIOWYCH
 
 				// System.out.println("SUMA = " +suma);
