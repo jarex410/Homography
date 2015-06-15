@@ -22,7 +22,6 @@ public class Knn1 {
 		String dir = "D:/IN¯YNIERKA/Desc/";
 		String nazwa = "";
 		String nazwa2 = "";
-		String nazwa3 = "";
 		String dir2 = "D:/IN¯YNIERKA/knn2/";
 		String pom4 = "";
 
@@ -44,14 +43,14 @@ public class Knn1 {
 		// PKT;
 		int liczbaPar = 0;
 
-		for (int i = 2; i < 50; i++) {
+		for (int i = 0; i < 50; i++) {
 
 			for (int j = 0; j < 6; j++) {
-				
+
 				for (int k = 0; k < 10; k++) {
 					String TYP = "";
-					int LiczbaParPom = 0;
-					ArrayList<String> lista = new ArrayList<String>();
+				
+					
 					ArrayList<String> lista2 = new ArrayList<String>();
 
 					if (i < 10) {
@@ -63,10 +62,30 @@ public class Knn1 {
 						nazwa2 = i + "_0" + j + "_0" + k + ".jpg";
 
 					}
+					FileReader fr2 = new FileReader(dir + "Desc " + nazwa2
+							+ ".txt");
+					BufferedReader bfr2 = new BufferedReader(fr2);
+					String pom;
+					int liczbaPkt2 = 0;
+					while ((pom = bfr2.readLine()) != null) { // DRUGI PLIK
+						// WCZYTANIE
+						// DO
+						// LISTY
+						lista2.add(pom);
+						for (int ii = 0; ii < 64; ii++) {
+							pom = bfr2.readLine();
+							lista2.add(pom);
+						}
+						liczbaPkt2++;
+					}
+
+					System.out.println("OBRAZEK       =      " + nazwa2);
 					File plik = new File(dir2 + " KNN  " + nazwa2 + ".txt");
 					FileWriter zapis = new FileWriter(plik, true);
-					for (int ij = 0; ij < 50; ij++) {
 
+					for (int ij = 0; ij < 50; ij++) {
+						ArrayList<String> lista = new ArrayList<String>();
+						int LiczbaParPom = 0;
 						if (ij < 10) {
 							nazwa = "0" + ij + "_00_00.jpg";
 						} else {
@@ -76,12 +95,9 @@ public class Knn1 {
 						FileReader fr = new FileReader(dir + "Desc " + nazwa
 								+ ".txt");
 						BufferedReader bfr = new BufferedReader(fr);
-						FileReader fr2 = new FileReader(dir + "Desc " + nazwa2
-								+ ".txt");
-						BufferedReader bfr2 = new BufferedReader(fr2);
 
-						String pom;
-						int liczbaPkt1 = 0, liczbaPkt2 = 0, liczbaPkt = 0;
+						
+						int liczbaPkt1 = 0;// liczbaPkt = 0;
 
 						while ((pom = bfr.readLine()) != null) { // PIERWSZY
 																	// PLIK
@@ -96,24 +112,12 @@ public class Knn1 {
 							liczbaPkt1++;
 						}
 
-						while ((pom = bfr2.readLine()) != null) { // DRUGI PLIK
-																	// WCZYTANIE
-																	// DO
-							// LISTY
-							lista2.add(pom);
-							for (int ii = 0; ii < 64; ii++) {
-								pom = bfr2.readLine();
-								lista2.add(pom);
-							}
-							liczbaPkt2++;
-						}
-
-						if (liczbaPkt1 > liczbaPkt2) // OBLICZANIE MINIMALNEJ
+				//		if (liczbaPkt1 > liczbaPkt2) // OBLICZANIE MINIMALNEJ
 														// LICZBY PKT
 							// WLASCIWIIE NIEPOTRZEBNE
-							liczbaPkt = liczbaPkt2;
-						else
-							liczbaPkt = liczbaPkt1;
+					//		liczbaPkt = liczbaPkt2;
+				//		else
+				//			liczbaPkt = liczbaPkt1;
 
 						Iterator<String> it = lista.iterator(); // DESKRYPTORY//
 																// PIERWSZEGO//
@@ -133,7 +137,7 @@ public class Knn1 {
 							double min2 = 100;
 							String wsp1Max = "";
 							String wsp2Max = "";
-							for (int kk = 0; kk < liczbaPkt2 && kk < liczbaPkt; kk++) // PETLA
+							for (int kk = 0; kk < liczbaPkt2 && kk < liczbaPkt1; kk++) // PETLA
 							// KTORA
 							// OBSLUGUJE
 							// SPRAWDZANIE PKTx1 z listy
@@ -169,21 +173,22 @@ public class Knn1 {
 								 * pom7; } else if (kk == 1) { min2 = suma;
 								 * wsp2Max = pom6 + pom7; }
 								 */
-								if (suma < 0.5 && suma < min1) {
+								if (suma < 0.8 && suma < min1) {
 									min1 = suma;
 									wsp1Max = pom6 + pom7 + "\n";
 
-								} else if (suma < 0.5 && suma < min2
+								} else if (suma < 0.8 && suma < min2
 										&& suma > min1) {
 									min2 = suma;
 									wsp2Max = pom6 + pom7 + "\n";
 
 								}
-								if (min1 > 5)
+								if (min1 >5) 
 									wsp1Max = "";
 
 								if (min2 > 5)
 									wsp2Max = "";
+
 
 								/*
 								 * if(kk<1 && suma < 0.8) { zapis.write(pom6 +
@@ -210,7 +215,7 @@ public class Knn1 {
 								LiczbaParPom++;
 							if (!wsp2Max.equals(""))
 								LiczbaParPom++;
-						//	zapis.write(wsp1Max + wsp2Max); // FORMAT
+							// zapis.write(wsp1Max + wsp2Max); // FORMAT
 
 							pom6 = "";
 							// licznikObrotu++;
@@ -242,18 +247,18 @@ public class Knn1 {
 							liczbaPar = LiczbaParPom;
 							TYP = nazwa;
 						}
-						LiczbaParPom = 0;
+						
 						fr.close();
 						fr2.close();
-						System.out.println("TYP ===" + TYP);
+						System.out.println("TYP ===" + TYP + "\n" + liczbaPar);
+
 					}
-					zapis.write("Liczba Par = " + LiczbaParPom + "\n KLASA = "
+					zapis.write("Liczba Par = " + liczbaPar + "\n KLASA = "
 							+ TYP);
 
 					zapis.close();
 
 					// in2.close();
-
 
 				}
 
