@@ -22,7 +22,7 @@ public class Knn {
 				"D:/IN¯YNIERKA/Desc/Desc 24_00_00.jpg.txt");
 		BufferedReader bfr = new BufferedReader(fr);
 		FileReader fr2 = new FileReader(
-				"D:/IN¯YNIERKA/Desc/Desc 24_00_00.jpg.txt");
+				"D:/IN¯YNIERKA/Desc/Desc 00_00_00.jpg.txt");
 		BufferedReader bfr2 = new BufferedReader(fr2);
 
 		int liczbaPkt1 = 0, liczbaPkt2 = 0, liczbaPkt = 0; // ZMIENNE DO
@@ -117,17 +117,17 @@ public class Knn {
 				}
 				suma = Math.sqrt(suma);
 
-				if (kk == 0) {
+/*				if (kk == 0 && suma < 0.8) {
 					min1 = suma;
 					wsp1Max = pom6 + pom7 ;
-				} else if (kk == 1) {
+				} else if (kk == 1 && suma < 0.8) {
 					min2 = suma;
 					wsp2Max = pom6 + pom7 ;
-				}
+				}*/
 				if (suma < 0.8 && suma < min1) {
 					min1 = suma;
 					wsp1Max = pom6 + pom7 ;
-				} else if (suma < 0.8 && suma < min2) {
+				} else if (suma < 0.8 && suma < min2 && suma > min1) {
 					min2 = suma;
 					wsp2Max = pom6 + pom7;
 				}
