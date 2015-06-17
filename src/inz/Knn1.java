@@ -1,20 +1,12 @@
 package inz;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-
-import org.ejml.data.DenseMatrix64F;
-
-import boofcv.io.image.UtilImageIO;
-import boofcv.struct.geo.AssociatedPair;
 
 public class Knn1 {
 
@@ -34,25 +26,30 @@ public class Knn1 {
 
 		double suma = 0;
 
-		int z = 0;
+		int PoprawneKlasyfikacje = 0;
+
+		// int z = 0;
 
 		// ZMIENNE DO
 		// PRZECHOWYWANIA
 		// WARTOSCI
 		// ODNALEZIONYCH
 		// PKT;
-		int liczbaPar = 0;
 
-		for (int i = 0; i < 50; i++) {
-
+		for (Integer i = 2; i < 5; i++) {
+			if (i < 1)
+				continue;
 			for (int j = 0; j < 6; j++) {
 
 				for (int k = 0; k < 10; k++) {
+					if (j == 0 && k ==0)
+						continue;
+					// if(j==0 && k==0)
+					// continue;
 					String TYP = "";
-				
-					
-					ArrayList<String> lista2 = new ArrayList<String>();
+					int liczbaPar = 0;
 
+					ArrayList<String> lista = new ArrayList<String>();
 					if (i < 10) {
 
 						nazwa2 = "0" + i + "_0" + j + "_0" + k + ".jpg";
@@ -67,24 +64,28 @@ public class Knn1 {
 					BufferedReader bfr2 = new BufferedReader(fr2);
 					String pom;
 					int liczbaPkt2 = 0;
-					while ((pom = bfr2.readLine()) != null) { // DRUGI PLIK
-						// WCZYTANIE
-						// DO
-						// LISTY
-						lista2.add(pom);
+					while ((pom = bfr2.readLine()) != null) { // wcytanie
+						// obrazka
+						// do
+						// sklasyfikowania
+
+						lista.add(pom);
 						for (int ii = 0; ii < 64; ii++) {
 							pom = bfr2.readLine();
-							lista2.add(pom);
+							lista.add(pom);
 						}
 						liczbaPkt2++;
 					}
 
-					System.out.println("OBRAZEK       =      " + nazwa2);
+					System.out.println("OBRAZEK       =      " + nazwa2
+							+ "\t Poprawnie sklasyfikowane = "
+							+ PoprawneKlasyfikacje);
 					File plik = new File(dir2 + " KNN  " + nazwa2 + ".txt");
 					FileWriter zapis = new FileWriter(plik, true);
 
-					for (int ij = 0; ij < 50; ij++) {
-						ArrayList<String> lista = new ArrayList<String>();
+					for (int ij = 0; ij < 50; ij++) { // petla przeszukujaca
+														// obrazy wzorcowe
+						ArrayList<String> lista2 = new ArrayList<String>();
 						int LiczbaParPom = 0;
 						if (ij < 10) {
 							nazwa = "0" + ij + "_00_00.jpg";
@@ -96,7 +97,6 @@ public class Knn1 {
 								+ ".txt");
 						BufferedReader bfr = new BufferedReader(fr);
 
-						
 						int liczbaPkt1 = 0;// liczbaPkt = 0;
 
 						while ((pom = bfr.readLine()) != null) { // PIERWSZY
@@ -104,20 +104,20 @@ public class Knn1 {
 																	// WCZYTANIE
 																	// DO
 							// LISTY
-							lista.add(pom);
+							lista2.add(pom);
 							for (int ii = 0; ii < 64; ii++) {
 								pom = bfr.readLine();
-								lista.add(pom);
+								lista2.add(pom);
 							}
 							liczbaPkt1++;
 						}
 
-				//		if (liczbaPkt1 > liczbaPkt2) // OBLICZANIE MINIMALNEJ
-														// LICZBY PKT
-							// WLASCIWIIE NIEPOTRZEBNE
-					//		liczbaPkt = liczbaPkt2;
-				//		else
-				//			liczbaPkt = liczbaPkt1;
+						// if (liczbaPkt1 > liczbaPkt2) // OBLICZANIE MINIMALNEJ
+						// LICZBY PKT
+						// WLASCIWIIE NIEPOTRZEBNE
+						// liczbaPkt = liczbaPkt2;
+						// else
+						// liczbaPkt = liczbaPkt1;
 
 						Iterator<String> it = lista.iterator(); // DESKRYPTORY//
 																// PIERWSZEGO//
@@ -131,7 +131,7 @@ public class Knn1 {
 						while (it.hasNext() && it2.hasNext()) { // PETELKA
 																// PRZECHODZ¥CA
 																// PO
-							// KOLEKCJACH
+																// KOLEKCJACH
 							// pom6 = it.next();
 							double min1 = 100;
 							double min2 = 100;
@@ -173,28 +173,24 @@ public class Knn1 {
 								 * pom7; } else if (kk == 1) { min2 = suma;
 								 * wsp2Max = pom6 + pom7; }
 								 */
-								if (suma < 0.8 && suma < min1) {
+								if (suma < min1) {
 									min1 = suma;
 									wsp1Max = pom6 + pom7 + "\n";
 
-								} else if (suma < 0.8 && suma < min2
-										&& suma > min1) {
+								} else if (suma < min2 && suma > min1) {
 									min2 = suma;
 									wsp2Max = pom6 + pom7 + "\n";
 
 								}
-								if (min1 >5) 
-									wsp1Max = "";
-
-								if (min2 > 5)
-									wsp2Max = "";
-
-
 								/*
-								 * if(kk<1 && suma < 0.8) { zapis.write(pom6 +
-								 * pom7 + "\n"); // FORMAT liczbaPar++; pom6 =
-								 * ""; }
-								 */
+								 * if (min1 > 5) wsp1Max = "";
+								 * 
+								 * if (min2 > 5) wsp2Max = "";
+								 *//*
+									 * if(kk<1 && suma < 0.8) { zapis.write(pom6
+									 * + pom7 + "\n"); // FORMAT liczbaPar++;
+									 * pom6 = ""; }
+									 */
 								// tabSum[z++] = suma; // WRZUCENIE SUMY DO
 								// TABLICY
 								// W CELACH
@@ -211,10 +207,11 @@ public class Knn1 {
 									it.next();
 								}
 							}
-							if (!wsp1Max.equals(""))
+							if (!wsp1Max.equals("") && !wsp2Max.equals("")
+									&& min1 / min2 < 0.8) {
 								LiczbaParPom++;
-							if (!wsp2Max.equals(""))
-								LiczbaParPom++;
+							}
+
 							// zapis.write(wsp1Max + wsp2Max); // FORMAT
 
 							pom6 = "";
@@ -247,12 +244,29 @@ public class Knn1 {
 							liczbaPar = LiczbaParPom;
 							TYP = nazwa;
 						}
-						
+
 						fr.close();
 						fr2.close();
-						System.out.println("TYP ===" + TYP + "\n" + liczbaPar);
+
+						if (liczbaPar == liczbaPkt2 || liczbaPar>150) {
+
+							if (i == ij) {
+
+								PoprawneKlasyfikacje++;
+							}
+							System.out.println("LICZBA PAR = " + liczbaPar);
+							break;
+						}
+						System.out.println("Porownanie z   " + ij
+								+ "\n TYP ===" + TYP + "\n" + liczbaPar);
 
 					}
+					if (i < 10) {
+						if (TYP.startsWith(i.toString(), 1))
+							PoprawneKlasyfikacje++;
+					} else if (TYP.startsWith(i.toString()))
+						PoprawneKlasyfikacje++;
+
 					zapis.write("Liczba Par = " + liczbaPar + "\n KLASA = "
 							+ TYP);
 
@@ -263,7 +277,11 @@ public class Knn1 {
 				}
 
 			}
-
+			File plik = new File(dir2 + " WYNIKI dla " + nazwa2 + ".txt");
+			FileWriter zapis = new FileWriter(plik, true);
+			zapis.write("Liczba poprawnych klasyfikacji ="
+					+ PoprawneKlasyfikacje);
+			zapis.close();
 		}
 
 	}
