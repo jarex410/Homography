@@ -36,18 +36,19 @@ public class Knn1 {
 		// ODNALEZIONYCH
 		// PKT;
 
-		for (Integer i = 2; i < 5; i++) {
-			if (i < 1)
-				continue;
+		for (Integer i = 0; i <1; i++) {
+
 			for (int j = 0; j < 6; j++) {
 
 				for (int k = 0; k < 10; k++) {
 					if (j == 0 && k ==0)
 						continue;
-					// if(j==0 && k==0)
-					// continue;
+					if(i==0 && j==0 && k<5)
+						continue;
+
 					String TYP = "";
-					int liczbaPar = 0;
+					int liczbaPar = 0; //próg 0.80
+					
 
 					ArrayList<String> lista = new ArrayList<String>();
 					if (i < 10) {
@@ -76,6 +77,8 @@ public class Knn1 {
 						}
 						liczbaPkt2++;
 					}
+					bfr2.close();
+					fr2.close();
 
 					System.out.println("OBRAZEK       =      " + nazwa2
 							+ "\t Poprawnie sklasyfikowane = "
@@ -111,6 +114,8 @@ public class Knn1 {
 							}
 							liczbaPkt1++;
 						}
+						bfr.close();
+						fr.close();
 
 						// if (liczbaPkt1 > liczbaPkt2) // OBLICZANIE MINIMALNEJ
 						// LICZBY PKT
@@ -133,10 +138,10 @@ public class Knn1 {
 																// PO
 																// KOLEKCJACH
 							// pom6 = it.next();
-							double min1 = 100;
+							double min1 = 100; //Najblizsi sasiedzi
 							double min2 = 100;
-							String wsp1Max = "";
-							String wsp2Max = "";
+							//String wsp1Max = "";
+						//	String wsp2Max = "";
 							for (int kk = 0; kk < liczbaPkt2 && kk < liczbaPkt1; kk++) // PETLA
 							// KTORA
 							// OBSLUGUJE
@@ -175,11 +180,11 @@ public class Knn1 {
 								 */
 								if (suma < min1) {
 									min1 = suma;
-									wsp1Max = pom6 + pom7 + "\n";
+								//	wsp1Max = pom6 + pom7 + "\n";
 
 								} else if (suma < min2 && suma > min1) {
 									min2 = suma;
-									wsp2Max = pom6 + pom7 + "\n";
+								//	wsp2Max = pom6 + pom7 + "\n";
 
 								}
 								/*
@@ -207,8 +212,10 @@ public class Knn1 {
 									it.next();
 								}
 							}
-							if (!wsp1Max.equals("") && !wsp2Max.equals("")
-									&& min1 / min2 < 0.8) {
+							
+							
+							
+							if (min1 / min2 < 0.8) { //zliczanie par
 								LiczbaParPom++;
 							}
 
@@ -245,8 +252,7 @@ public class Knn1 {
 							TYP = nazwa;
 						}
 
-						fr.close();
-						fr2.close();
+
 
 						if (liczbaPar == liczbaPkt2 || liczbaPar>150) {
 
