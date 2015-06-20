@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
 
-public class Knn1 {
+public class Knn3 {
 
 	public static void main(String[] args) throws IOException {
 		String dir = "D:/IN¯YNIERKA/Desc/";
@@ -40,14 +40,14 @@ public class Knn1 {
 		// ODNALEZIONYCH
 		// PKT;
 
-		for (Integer i = 3; i <4 ; i++) {
+		for (Integer i = 4; i <5 ; i++) {
 
 			for (int j = 0; j < 6; j++) {
 
 				for (int k = 0; k < 10; k++) {
 					 if (j == 0 && k == 0)
 					 continue;
-					 if (j == 0 && k < 8)
+					 if (j == 0 && k < 9)
 					 continue;
 
 					String TYP = "";
@@ -120,16 +120,16 @@ public class Knn1 {
 						bfr.close();
 						fr.close();
 
-						Iterator<String> it = lista.iterator(); // DESKRYPTORY
+					//	Iterator<String> it = lista.iterator(); // DESKRYPTORY
 																// PIERWSZEGO/OBRAZKA
-						Iterator<String> it2 = lista2.iterator();// DESKRYPTORY
+					//	Iterator<String> it2 = lista2.iterator();// DESKRYPTORY
 								// 2 OBRAZKA
 						int skok = 0;
 						int licznikObrotu = 0; // ZMIENNE POMOCNA PRZY
-						int z=0;		
+						//int z=0;		
 
 						// WYLICZENIU PRZESUNIECIA
-						while (z < liczbaPkt1) { // PETELKA
+						for(int zz=0;zz < liczbaPkt1;zz++) { // PETELKA
 													// PRZECHODZ¥CA
 													// PO
 													// KOLEKCJACH
@@ -145,17 +145,17 @@ public class Knn1 {
 							// 1 z PKTx1....xn z listy 2
 
 							{ 
-								pom6 = it.next(); // WSPOLRZEDNE PKT
-								pom7 = it2.next();
+								pom6 = lista.get(skok); // WSPOLRZEDNE PKT
+								pom7 = lista2.get(kk*65);
 								//System.out.println("POM6 " + pom6+ " \t" + pom7);
 
-								for (int jj = 0; jj < 64; jj++) { // PRZECHODZENIE
+								for (int jj = 1; jj <= 64; jj++) { // PRZECHODZENIE
 																	// PO
 																	// KOLEKCJACH
 																	// W
 									// CELU POBRANIA DANYCH DESC
-									pom4 = it.next();
-									pom5 = it2.next();
+									pom4 = lista.get(skok+jj);
+									pom5 = lista2.get(kk*65+jj);
 									suma += (Double.parseDouble(pom4) - Double
 											.parseDouble(pom5))
 											* (Double.parseDouble(pom4) - Double
@@ -177,17 +177,17 @@ public class Knn1 {
 
 								suma = 0;
 
-								it = lista.iterator();
+/*								it = lista.iterator();
 								for (int zz = 0; zz < skok; zz++) { // PRZESUWANIE
 									// ITERATORA
 									// LISTY
 									// PIERWSZEJ W CELU JEGO
 									// ODPOWIEDNIGO UMIEJSCOWIENIA
 									it.next();
-								}
+								}*/
 
 							}
-							it2 = lista2.iterator();
+						//	it2 = lista2.iterator();
 
 							skok = 65 * ++licznikObrotu; // WYLICZANIE WARTOSCI
 							// PRZESUNIÊCIA
@@ -200,7 +200,7 @@ public class Knn1 {
 							}
 
 							//pom6 = "";
-							z++;
+							
 							
 						}
 
